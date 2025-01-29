@@ -25,6 +25,7 @@ install_goose() {
   fi
 
   # 3. Manual Installation (using the downloaded binary)
+  curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | bash
   binary_name="goose-x86_64-unknown-linux-gnu.tar.bz2"  # The exact filename you have
   extracted_dir="goose-x86_64-unknown-linux-gnu" # The directory it extracts to
 
