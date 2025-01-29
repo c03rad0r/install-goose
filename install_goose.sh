@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Function to check if a command exists
 command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
@@ -28,6 +27,9 @@ install_goose() {
   # 3. Manual Installation (using the downloaded binary)
   binary_name="goose-x86_64-unknown-linux-gnu.tar.bz2"  # The exact filename you have
   extracted_dir="goose-x86_64-unknown-linux-gnu" # The directory it extracts to
+
+  # ***KEY CHANGE***: Move the downloaded binary to the current directory
+  mv "$HOME/goose/$binary_name" . 2>/dev/null # Suppress error if file doesn't exist
 
   if [[ -f "$binary_name" ]]; then
     echo "Found the binary: $binary_name"
@@ -60,6 +62,14 @@ install_goose() {
     return 1
   fi
 
+   # 4. Install libxcb1 (or the correct library)
+  if ! command_exists libxcb1; then # Check if libxcb1 is installed
+      echo "Installing libxcb1 dependency..."
+      sudo apt update
+      sudo apt install -y libxcb1 # Install the library
+  fi
+
+
   rm -rf "$extracted_dir" "$binary_name" # Clean up
 
   echo "Installation complete."
@@ -67,4 +77,6 @@ install_goose() {
   return 0
 }
 
+
+sudo apt install -y libxcb1
 install_goose
