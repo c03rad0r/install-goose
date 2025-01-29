@@ -1,16 +1,12 @@
-```markdown
-# Instructions to install goose
+# Instructions to [install goose](https://block.github.io/goose/docs/getting-started/installation/)
 
-https://block.github.io/goose/docs/getting-started/installation/
-
-# Scripts to install goose
-
+## Scripts to install goose
 ```bash
 ./build_openssl.sh
 ./install_goose.sh
 ```
 
-# Configuration and Usage
+## Configuration and Usage
 
 Goose requires a configuration file named `secrets.json` in the same directory where you run the Goose commands. This file should contain your API keys and other settings in JSON format. A sample `secrets.json` file is provided below. **Replace `"your_actual_api_key"` with your actual Google Gemini API key.**
 
@@ -22,7 +18,7 @@ Goose requires a configuration file named `secrets.json` in the same directory w
 }
 ```
 
-## Setting Environment Variables and Running Goose
+### Setting Environment Variables and Running Goose
 
 1. **Create `secrets.json`:** Create the `secrets.json` file with your API key.  Make sure it is valid JSON.  Use a JSON validator if you are unsure.
 
