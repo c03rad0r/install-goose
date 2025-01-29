@@ -36,6 +36,11 @@ chmod +x set_env.sh
 
 This will load the settings from `secrets.json`, set the environment variables, add them to your `.bashrc` file, and start a Goose session.  If `goose` is not found, it will attempt to add it to the PATH.  If it still cannot be found, double check your goose installation.
 
+4. **Add extensions:** add extensions file:
+```
+cp config.yaml ~/.config/goose/config.yaml
+```
+
 **Troubleshooting:**
 
 * **`jq` not found:** Run `sudo apt-get install jq` (or the equivalent for your distribution).
