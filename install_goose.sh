@@ -41,16 +41,12 @@ else
 fi
 
 # Set the path in the config file
-if grep -q "export PATH="$HOME/.local/bin:\\\\\$PATH"" "$CONFIG_FILE"; then
-    echo "PATH already configured in $CONFIG_FILE"
-else
+if ! grep -q "export PATH="$HOME/.local/bin:\\\\\$PATH"" "$CONFIG_FILE"; then
     echo "export PATH="$HOME/.local/bin:\\\\\$PATH"" >> "$CONFIG_FILE"
     echo "Added export PATH to $CONFIG_FILE"
+else
+    echo "PATH already configured in $CONFIG_FILE"
 fi
-
-# Source the file
-source "$CONFIG_FILE"
-echo "Sourced $CONFIG_FILE to apply changes in the current session"
 
 echo "Please reload your shell (e.g. 'source ~/.bashrc', 'source ~/.zshrc') to apply changes in new sessions."
 echo "Goose installation complete."
