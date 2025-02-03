@@ -44,6 +44,8 @@ echo "GOOSE_PROVIDER: $GOOSE_PROVIDER"
 echo "GOOSE_MODEL: $GOOSE_MODEL"
 echo "GOOGLE_API_KEY: $GOOGLE_API_KEY"
 
+# Set the path before calling goose
+export PATH="$HOME/.local/bin:$PATH"
 
 # Now you can run your goose commands
 goose session
