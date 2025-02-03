@@ -30,7 +30,7 @@ while IFS='=' read -r key value; do
     echo "export $key="$value"" >> "$HOME/.bashrc"
     echo "Added export for $key to $HOME/.bashrc"
   fi
-done < <(jq -r '. | keys[] as $k | "\($k)=\(\.[$k])"' <<< "$json_data")
+done < <(jq -r '. | keys[] as $k | $k + "=" + .[$k]' <<< "$json_data")
 
 # Source .bashrc to apply the changes immediately (if new exports were added)
 if [[ $(grep -q "export " "$HOME/.bashrc") ]]; then
