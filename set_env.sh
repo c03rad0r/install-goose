@@ -7,8 +7,14 @@ command_exists() {
 
 # Check if jq is installed
 if ! command_exists jq; then
-  echo "Error: jq is not installed. Please install it (e.g., 'sudo apt-get install jq')."
-  exit 1
+  echo "jq is not installed. Attempting to install it..."
+  sudo apt-get update
+  if sudo apt-get install -y jq; then
+    echo "jq has been successfully installed."
+  else
+    echo "Error: Failed to install jq. Please install it manually (e.g., 'sudo apt-get install jq')."
+    exit 1
+  fi
 fi
 
 # Load the JSON data
@@ -19,12 +25,12 @@ while IFS='=' read -r key value; do
   export "$key"="$value"
 
   # Check if the export is already in .bashrc (improved check)
-  if ! grep -q "export $key=\"$value\"" "$HOME/.bashrc"; then
+  if ! grep -q "export $key="$value"" "$HOME/.bashrc"; then
     # Add the export to .bashrc (using $HOME/.bashrc for consistency)
-    echo "export $key=\"$value\"" >> "$HOME/.bashrc"
+    echo "export $key="$value"" >> "$HOME/.bashrc"
     echo "Added export for $key to $HOME/.bashrc"
   fi
-done < <(jq -r '. | keys[] as $k | "\($k)=\(.[$k])"' <<< "$json_data")
+done < <(jq -r '. | keys[] as $k | "\($k)=\(\.[$k])"' <<< "$json_data")
 
 # Source .bashrc to apply the changes immediately (if new exports were added)
 if [[ $(grep -q "export " "$HOME/.bashrc") ]]; then
@@ -41,4 +47,3 @@ echo "GOOGLE_API_KEY: $GOOGLE_API_KEY"
 
 # Now you can run your goose commands
 goose session
-

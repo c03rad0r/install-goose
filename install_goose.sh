@@ -57,3 +57,7 @@ echo "Sourced $CONFIG_FILE to apply changes in the current session"
 
 echo "Please reload your shell (e.g. \'source ~/.bashrc\', \'source ~/.zshrc\') to apply changes in new sessions."
 echo "Goose installation complete."
+
+# Call set_env.sh
+echo "Setting up environment variables..."
+./set_env.sh
