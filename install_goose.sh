@@ -15,11 +15,9 @@ then
   sudo apt install -y bzip2
 fi
 
-
 DOWNLOAD_DIR=$(mktemp -d)
 
 curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | bash -s -- -d $DOWNLOAD_DIR
-
 
 if [ -f "$DOWNLOAD_DIR/goose" ]; then
   sudo mv "$DOWNLOAD_DIR/goose" "$HOME/.local/bin/goose"
@@ -42,11 +40,10 @@ else
     touch "$CONFIG_FILE"
 fi
 
-# Check if the line already exists
+# Set the path in the config file
 if grep -q "export PATH="$HOME/.local/bin:\\\\\$PATH"" "$CONFIG_FILE"; then
     echo "PATH already configured in $CONFIG_FILE"
 else
-    # Add the export command
     echo "export PATH="$HOME/.local/bin:\\\\\$PATH"" >> "$CONFIG_FILE"
     echo "Added export PATH to $CONFIG_FILE"
 fi
@@ -55,8 +52,15 @@ fi
 source "$CONFIG_FILE"
 echo "Sourced $CONFIG_FILE to apply changes in the current session"
 
-echo "Please reload your shell (e.g. \'source ~/.bashrc\', \'source ~/.zshrc\') to apply changes in new sessions."
+echo "Please reload your shell (e.g. 'source ~/.bashrc', 'source ~/.zshrc') to apply changes in new sessions."
 echo "Goose installation complete."
+
+# Copy secrets.json to the same directory as the script (if it's not there)
+if [ ! -f "./secrets.json" ]; then
+  echo "secrets.json not found in current directory, exiting"
+  exit 1
+fi
+cp "./secrets.json" "$HOME/secrets.json"
 
 # Call set_env.sh
 echo "Setting up environment variables..."

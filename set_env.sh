@@ -18,7 +18,7 @@ if ! command_exists jq; then
 fi
 
 # Load the JSON data
-json_data=$(cat secrets.json)
+json_data=$(cat "$HOME/secrets.json")
 
 # Parse the JSON and set environment variables
 while IFS='=' read -r key value; do
